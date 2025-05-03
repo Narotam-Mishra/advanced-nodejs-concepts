@@ -44,4 +44,27 @@
 
 ## 006   The Event Loop Implementation (31:48)
 
-# 
+# Conditions under whcih Event Loop runs :-
+- 1st check - any pending  setTimeout, setInterval, setImmediate
+- 2nd check - any pending OS tasks ? (Like server listening to port)
+- 3rd check - any pending long running operations ? (like fs module)
+
+## 007   Event Loop Ticks (39:11)
+- 1). Node looks at pending timers and sees if any functions are ready to be called (i.e, setTimeout & setInterval) 
+
+- 2). Node looks at pendingOSTasks and pendingOperations and calls relevant callbacks 
+    
+- 3). Pause execution, continue whenever ....
+    - a new pendingOSTask is done
+    - a new pendingOperation is done
+    - a timer is about to complete
+
+- 4). Look at pendingTimers and call any setImmediate (But this time Node doesn't care about `setTimeout` & `setInterval` function calls, it only looks for functions that have been registered with `setImmediate`)
+
+- 5). handle any `close` events (clean up task)
+
+## 008   Is Node Single Threaded? (45:58)
+
+# Node's Event Loop is truly single threaded i.e, when we start up a program with Node a single instance of the Event Loop is created and placed into one thread.
+
+# Some of the functions that are included inside of the standard library of Node are not actually single threaded that means some of the functions that are included inside of Node that we used to run, run outside of Event Loop and outside of single thread so simply declaring that Node is single threaded is not absolutely true. 
