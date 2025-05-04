@@ -100,3 +100,14 @@
 # Case 1 - Number of threads = 2
 
 # Case 2 - Number of threads = 5
+
+## 013   Common Threadpool Questions (01:12:33)
+
+Q1. Can we use the threadpool for javascript code or can only Nodejs functions use it?
+# We can write custom JS that uses the thread pool.
+
+Q2. What functions in Node Std library use the threadpool?
+# All 'fs' module functions. Some crypto stuff. Depends on OS (window vs unix based).
+
+Q3. How does this threadpool stuff fit into the event loop?
+# Tasks running in the threadpool are the `pendingOperations` in our code example.
