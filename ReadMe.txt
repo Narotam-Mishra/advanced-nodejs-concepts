@@ -97,4 +97,6 @@
 
 ## 012   Changing Threadpool Size (01:07:08)
 
-# 
+# Case 1 - Number of threads = 2
+
+# Case 2 - Number of threads = 5
