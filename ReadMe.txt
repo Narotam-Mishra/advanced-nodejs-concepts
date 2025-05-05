@@ -114,4 +114,14 @@ Q3. How does this threadpool stuff fit into the event loop?
 
 ##  014   Explaining OS Operations (01:15:50)
 
-# 
+# Make Network call to `https:/www.google.com` and calculated the time it took to make this call.
+
+## 015   Libuv OS Delegation (01:19:42)
+
+# We will add some more network request calls and when we do so we will find that some of the functions in the Node standard library don't seem to use same kind of thread pool that some other functions use (like pbkdf2 hashing function did)
+
+# After running the code, it seemed that all 7 calls appear to be completed at the same exact time. This is distinctly different behaviour that we saw previously with thread pool.
+
+# As Node standard library has some functions that make use of libuv's threadpool it also has some functions that make use of code that is built into the underlying Operating System through libuv, so in this case libuv sees that we are attempting to make an HTTP reques, neither libuv nor Node has any code to handle all of the super low-level operations that are involved with a network request instead libuv delegates the request making to the underlying Operating System (OS) so actually it's Operating System that does the real HTTP request. libuv is used to issue the request and then it just waits for Operating System to emit a signal that some response has come back to the request. so beacuse libuv is delegating the work done to the OS , the OS itself decides whether to make a new thread or not. As OS is making request there is no blocking of our JS code inside Event Loop or anything else inside of our application. So we are not touching the threadpool at all in this case.
+
+
