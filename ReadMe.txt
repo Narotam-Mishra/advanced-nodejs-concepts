@@ -111,3 +111,7 @@ Q2. What functions in Node Std library use the threadpool?
 
 Q3. How does this threadpool stuff fit into the event loop?
 # Tasks running in the threadpool are the `pendingOperations` in our code example.
+
+##  014   Explaining OS Operations (01:15:50)
+
+# 
