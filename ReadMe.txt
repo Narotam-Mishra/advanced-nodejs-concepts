@@ -124,4 +124,11 @@ Q3. How does this threadpool stuff fit into the event loop?
 
 # As Node standard library has some functions that make use of libuv's threadpool it also has some functions that make use of code that is built into the underlying Operating System through libuv, so in this case libuv sees that we are attempting to make an HTTP reques, neither libuv nor Node has any code to handle all of the super low-level operations that are involved with a network request instead libuv delegates the request making to the underlying Operating System (OS) so actually it's Operating System that does the real HTTP request. libuv is used to issue the request and then it just waits for Operating System to emit a signal that some response has come back to the request. so beacuse libuv is delegating the work done to the OS , the OS itself decides whether to make a new thread or not. As OS is making request there is no blocking of our JS code inside Event Loop or anything else inside of our application. So we are not touching the threadpool at all in this case.
 
+## 016   OSAsync Common Questions (01:23:02)
+
+Q1. What functions in node std library use the OS's async features ?
+# Almost everything around networking for all OS's. Some other stuff is OS specific.
+
+Q2. How does this OS async stuff fit into the Event Loop?
+# Tasks using the underlying OS are reflected in `pendingOSTasks` array.
 
