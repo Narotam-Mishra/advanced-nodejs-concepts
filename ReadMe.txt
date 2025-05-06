@@ -135,3 +135,7 @@ Q2. How does this OS async stuff fit into the Event Loop?
 ## 017   Review (01:25:42)
 
 # Once we run our js file (let say index.js), all the code inside that file and any required files (using require) all executed. So the `require` statements those are instantly required in and executed as well. The Node enters `Event Loop` and proceed with further execution.
+
+## 018   Crazy Node Behavior (01:28:31)
+
+# 
