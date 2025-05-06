@@ -138,4 +138,11 @@ Q2. How does this OS async stuff fit into the Event Loop?
 
 ## 018   Crazy Node Behavior (01:28:31)
 
-# 
+## 019 Unexpected Event Loop Events (01:36:10)
+
+# fs module (file system) and http both are asynchronous calls it take some amount of time to complete its execution. However `fs` module make use of threadpool for its execution where as `http` networking call make use of `os` to complete its execution.
+
+# file read operation in Node :-
+# when we call read file, Node doesn't just go directly to the hard drive and immediately start reading the file instead it looks at the file on the hard drive and tries to gather some statistics about it like how large the file is, this entrie process involves one round trip to the Hard drive so Node goes to the Hard drive get some statistics about the file and then result comes back to the program, after Node has those stats it now knows how large file it can expect that file to be and then it is ready to actually go and read the file and then eventually calls the callback inside it. So the key things to keep in mind that there were two distinct pauses that occurred :-
+1). we had one pause during entire read file where node was just waiting on the hard drive to return some stats about this file ,
+2). when Node went back to the hard drive and started to actually read the file contents out.
