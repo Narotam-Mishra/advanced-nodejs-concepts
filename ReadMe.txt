@@ -1,4 +1,6 @@
 
+# Section 1 -  The Internals of Node
+
 ## 001 Staring With Node Internals (00:00)
 
 # V8 - It is open source JS engine created by Google. The purpose of this project is to execute JS code outside of the browser.
@@ -146,3 +148,21 @@ Q2. How does this OS async stuff fit into the Event Loop?
 # when we call read file, Node doesn't just go directly to the hard drive and immediately start reading the file instead it looks at the file on the hard drive and tries to gather some statistics about it like how large the file is, this entrie process involves one round trip to the Hard drive so Node goes to the Hard drive get some statistics about the file and then result comes back to the program, after Node has those stats it now knows how large file it can expect that file to be and then it is ready to actually go and read the file and then eventually calls the callback inside it. So the key things to keep in mind that there were two distinct pauses that occurred :-
 1). we had one pause during entire read file where node was just waiting on the hard drive to return some stats about this file ,
 2). when Node went back to the hard drive and started to actually read the file contents out.
+
+# Section 2 - Enhancing Node Performance
+
+## 020   Enhancing Performance
+
+# In this section we will look at how we can setup Node to run inside of cluster mode.
+
+# Cluster mode is used to start up multiple copies of Node that are all running our server inside them. We can't somehow trick Node into running with multiple threads but by starting up mutiple copies we get multiple instances of the Event Loop. So it vaguely somewhat works in a similar fashion as making Node kind of multi-threaded.
+
+# We will also use worker threads to do a lot of performance work inside of our app as well. These worker threads will use the thread pool that is set up by libuv
+
+# Improving Node performance 
+
+1). Use Node in `Cluster` Mode ---> Recommended
+
+2). Use Worker Threads ---> Experimental
+
+
