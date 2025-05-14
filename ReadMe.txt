@@ -124,7 +124,7 @@ Q3. How does this threadpool stuff fit into the event loop?
 
 # After running the code, it seemed that all 7 calls appear to be completed at the same exact time. This is distinctly different behaviour that we saw previously with thread pool.
 
-# As Node standard library has some functions that make use of libuv's threadpool it also has some functions that make use of code that is built into the underlying Operating System through libuv, so in this case libuv sees that we are attempting to make an HTTP reques, neither libuv nor Node has any code to handle all of the super low-level operations that are involved with a network request instead libuv delegates the request making to the underlying Operating System (OS) so actually it's Operating System that does the real HTTP request. libuv is used to issue the request and then it just waits for Operating System to emit a signal that some response has come back to the request. so beacuse libuv is delegating the work done to the OS , the OS itself decides whether to make a new thread or not. As OS is making request there is no blocking of our JS code inside Event Loop or anything else inside of our application. So we are not touching the threadpool at all in this case.
+# As Node standard library has some functions that make use of libuv's threadpool it also has some functions that make use of code that is built into the underlying Operating System through libuv, so in this case libuv sees that we are attempting to make an HTTP request, neither libuv nor Node has any code to handle all of the super low-level operations that are involved with a network request instead libuv delegates the request making to the underlying Operating System (OS) so actually it's Operating System that does the real HTTP request. libuv is used to issue the request and then it just waits for Operating System to emit a signal that some response has come back to the request. so beacuse libuv is delegating the work done to the OS , the OS itself decides whether to make a new thread or not. As OS is making request there is no blocking of our JS code inside Event Loop or anything else inside of our application. So we are not touching the threadpool at all in this case.
 
 ## 016   OSAsync Common Questions (01:23:02)
 
@@ -168,6 +168,12 @@ Q2. How does this OS async stuff fit into the Event Loop?
 ## 021   Express Setup
 
 # setup express to work with clustering 
+
+## 022   Blocking the Event Loop
+
+# Whenever a request comes into server it get processed inside `one single thread` in Node application that contains `Event Loop`.
+
+# As soon as we start executing JS specific code (like doWork method) that takes some amount of time to execute, our entire server is blocking any other requests that are coming in and it can do absolutely nothing else until that original request gets resolved and handled. So the effect of long running and computationally intensive code inside of a Node project can be quite catastrophic and not ideal at all.
 
 
 
