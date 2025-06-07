@@ -5,9 +5,13 @@
 
 # V8 - It is open source JS engine created by Google. The purpose of this project is to execute JS code outside of the browser.
 
-# libuv - It is a open source C++ project that gives Node access to the Operating System (OS), File System (fs), Networking and it also handles some aspects of concurrency as well.
+# libuv - It is a open source C++ project that gives Node access to the Operating System (OS), underlying File System (fs), Networking and it also handles some aspects of concurrency as well.
 
 # Node - Node gives us a nice interface to use, to relate our JS side of our application to the actual C++ that running under the hood on our computer to actually interpret and execute JS code. Apart of these, Node provide series of wrappers and very unified and consistent APIs.
+
+# `lib` - this folder contains all JS specific code of Node
+
+# `src` - this folder contain mainly C++ specific implementation of Node
 
 ## 002 Module Implementations (03:47)
 
@@ -21,6 +25,12 @@
 # this `pbkdf2` function is used for hashing some library data. It is usually used to hash a password for storage inside a database.
 
 ## 003   Node Backed by C (12:11)
+
+# process.binding() - this statement used to connects JS and C++ functions.
+
+# V8 is used to translate the Nodejs values that you and I place inside of our different programs like a boolean or a function or an object and translate into their C++ equivalent.
+
+# libuv used for lot of concurrency and processing constructs on the C++ side.
 
 ## 004   The Basics of Threads (18:44)
 
@@ -175,6 +185,8 @@ Q2. How does this OS async stuff fit into the Event Loop?
 
 # As soon as we start executing JS specific code (like doWork method) that takes some amount of time to execute, our entire server is blocking any other requests that are coming in and it can do absolutely nothing else until that original request gets resolved and handled. So the effect of long running and computationally intensive code inside of a Node project can be quite catastrophic and not ideal at all.
 
+## 023   Clustering in Theory
 
+# 
 
 
