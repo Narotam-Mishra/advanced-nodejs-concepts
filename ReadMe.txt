@@ -62,8 +62,10 @@
 
 # Conditions under whcih Event Loop runs :-
 - 1st check - any pending  setTimeout, setInterval, setImmediate
-- 2nd check - any pending OS tasks ? (Like server listening to port)
+- 2nd check - any pending OS tasks ? (like http server listening to port)
 - 3rd check - any pending long running operations ? (like fs module)
+
+# Node automatically detects when our JS code that we write sets up something like setTimeout call or issue a new call to `fs` module. These automatic detections occur even during that initial run of file (where JS code is written)
 
 ## 007   Event Loop Ticks (39:11)
 - 1). Node looks at pending timers and sees if any functions are ready to be called (i.e, setTimeout & setInterval) 

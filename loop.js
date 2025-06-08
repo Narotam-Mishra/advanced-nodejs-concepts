@@ -16,7 +16,7 @@ myFile.runContent();
 
 function shouldContinue(){
     // 1st check - any pending  setTimeout, setInterval, setImmediate
-    // 2nd check - any pending OS tasks ? (Like server listening to port)
+    // 2nd check - any pending OS tasks ? (Like http server listening to port)
     // 3rd check - any pending long running operations ? (like fs module)
 
     return pendingTimers.length || pendingOSTasks.length || pendingOperations.length;
@@ -38,10 +38,6 @@ while(shouldContinue()){
     // 5). handle any `close` events (clean up task)
 
 }
-
-
-
-
 
 
 // exit back to terminal
