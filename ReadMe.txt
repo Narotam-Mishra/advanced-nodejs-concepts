@@ -40,13 +40,17 @@
 
 # A single process can have multiple threads inside of it.
 
-# Deciding which order to execute these threads in is referred to as `Scheduling`.
-
 # Scheduling refers to Operating System's ability to decide which thread to process at any given instant.
 
 # In order to more quickly process threads or process more at one given time we can first add in additional CPU cores to our machine so if we have more than one core inside of our CPU then we can easily process multiple threads at the same time.
 
 # Technically one core of CPU can process more than one thread at a time through multi-threading (or hyper-threading)
+
+# Threads are unit of instructions that are waiting to be executed by CPU.
+
+# Deciding which order to execute these threads in is referred to as `Scheduling` and Scheduling is controlled by OS.
+
+# Two ways of improving the rate at which we process threads are 1). add more CPU cores to machine, 2). to allow OS Scheduler to detect big pauses in processing time due to expensive input and output operations. 
 
 ##  005   The Node Event Loop (25:14)
 
