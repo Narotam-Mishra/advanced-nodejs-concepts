@@ -197,6 +197,34 @@ Q2. How does this OS async stuff fit into the Event Loop?
 
 ## 023   Clustering in Theory (02:00:20)
 
-# 
+# When we start to use clustering inside of a Node application, we are going to be starting up multiple node processes. There always going to be one parent process or one kind of like overarching process called cluster manager. Cluster Manager is responsible for monitoring the health of individual instances of our application that we are going to launch at same time on our computer. The Cluster Manager itself doesn't actually execute any application code so in other words Cluster Manager isn't really responsible for handling incoming request or fetching data from DB. So, Cluster Manager can start instances, it can stop them, it can restart them, it can send them data, it can do other kind of administrative tasks essentially.
 
+1). Without Clustering
+
+==> RUN node index.js  -----> index.js -----> Node Instance
+
+2). With Cluster
+
+RUN node index.js
+        |
+        v
+   ┌─────────┐
+   │ index.js│
+   └────┬────┘
+        │
+        v
+ ┌──────────────┐
+ │Cluster Manager│
+ └──────┬───────┘
+        │ cluster.fork()
+        ├─→ Worker Instance 1
+        ├─→ Worker Instance 2
+        └─→ Worker Instance N
+
+# Using Clustering :- When we run the Node application (using `node index.js`), node going to boot our application by reading the content of that file and launching a node instance. the first instance of node that get launched when we run that command is what we refer to as the `Cluster Manager`. The cluster manager is then responsible for starting up worker instances and those worker instances are actually responsible for processing those incoming requests. To create those worker instances the cluster manager is going to require in the cluster module from the node standard library, so cluster module is standard module just like other fs, http, crypto modules.
+
+# There is one particular function on cluster module called fork `cluster.fork()` and whenever we call this function within cluster manager something very interesting happens.
+
+Q. What does `cluster.fork()` do?
+# When we call `cluster.fork()`, node internally goes back to the `index.js` file and it executes it for a second time but in slightly different mode i.e, when it executes that file (index.js) for a second time that then starts up worker instance so in other words we can say that `index.js` file is going to be executed multiple times by node. The first time it's going to produce cluster manager and then every time after that it's going to be producing worker instances. 
 
