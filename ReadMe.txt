@@ -124,10 +124,10 @@
 ## 013   Common Threadpool Questions (01:12:33)
 
 Q1. Can we use the threadpool for javascript code or can only Nodejs functions use it?
-# We can write custom JS that uses the thread pool.
+# Yes, We can write custom JS that uses the thread pool.
 
 Q2. What functions in Node Std library use the threadpool?
-# All 'fs' module functions. Some crypto stuff. Depends on OS (window vs unix based).
+# All 'fs' module functions make use of thread pool. Some crypto stuff. Depends on OS (window vs unix based).
 
 Q3. How does this threadpool stuff fit into the event loop?
 # Tasks running in the threadpool are the `pendingOperations` in our code example.
@@ -160,7 +160,7 @@ Q2. How does this OS async stuff fit into the Event Loop?
 
 ## 019 Unexpected Event Loop Events (01:36:10)
 
-# fs module (file system) and http both are asynchronous calls it take some amount of time to complete its execution. However `fs` module make use of threadpool for its execution where as `http` networking call make use of `os` to complete its execution.
+# fs module (file system) and http both are asynchronous calls and it take some amount of time to complete its execution. However `fs` and `crypto` both modules make use of threadpool for its execution where as `http` networking call make use of `os` to complete its execution. (http module doesn't make use of threadpool for its execution)
 
 # file read operation in Node :-
 # when we call read file, Node doesn't just go directly to the hard drive and immediately start reading the file instead it looks at the file on the hard drive and tries to gather some statistics about it like how large the file is, this entrie process involves one round trip to the Hard drive so Node goes to the Hard drive get some statistics about the file and then result comes back to the program, after Node has those stats it now knows how large file it can expect that file to be and then it is ready to actually go and read the file and then eventually calls the callback inside it. So the key things to keep in mind that there were two distinct pauses that occurred :-
@@ -169,7 +169,7 @@ Q2. How does this OS async stuff fit into the Event Loop?
 
 # Section 2 - Enhancing Node Performance
 
-## 020   Enhancing Performance
+## 020   Enhancing Performance (01:47:33)
 
 # In this section we will look at how we can setup Node to run inside of cluster mode.
 
@@ -183,17 +183,19 @@ Q2. How does this OS async stuff fit into the Event Loop?
 
 2). Use Worker Threads ---> Experimental
 
-## 021   Express Setup
+## 021   Express Setup (01:49:51)
 
 # setup express to work with clustering 
 
-## 022   Blocking the Event Loop
+## 022   Blocking the Event Loop (01:53:13)
 
 # Whenever a request comes into server it get processed inside `one single thread` in Node application that contains `Event Loop`.
 
-# As soon as we start executing JS specific code (like doWork method) that takes some amount of time to execute, our entire server is blocking any other requests that are coming in and it can do absolutely nothing else until that original request gets resolved and handled. So the effect of long running and computationally intensive code inside of a Node project can be quite catastrophic and not ideal at all.
+# the `doWork` function going to be executed inside Event Loop, this doesn't get thrown out of event loop and doesn't get handled by OS or anything other thing (as it is native JS Code).
 
-## 023   Clustering in Theory
+# As soon as we start executing JS specific code (like `doWork` method) that takes some amount of time (5 seconds) to execute, then our server will not process the incoming requests as effectively as they would and get blocked and  any other requests that are coming in can do absolutely nothing (5 seconds) until that original request gets resolved and handled. So the effect of long running and computationally intensive code inside of a Node project can be quite catastrophic and not ideal at all.
+
+## 023   Clustering in Theory (02:00:20)
 
 # 
 
