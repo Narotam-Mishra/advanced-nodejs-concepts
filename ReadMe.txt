@@ -228,3 +228,11 @@ RUN node index.js
 Q. What does `cluster.fork()` do?
 # When we call `cluster.fork()`, node internally goes back to the `index.js` file and it executes it for a second time but in slightly different mode i.e, when it executes that file (index.js) for a second time that then starts up worker instance so in other words we can say that `index.js` file is going to be executed multiple times by node. The first time it's going to produce cluster manager and then every time after that it's going to be producing worker instances. 
 
+## 024   Forking Children (02:05:31)
+
+# The cluster manager has that `isMaster` property that is always set to `true`.
+
+# As soon as we start forking off  additional worker instances (using cluster.fork()) however that `isMaster` flag is going to be set `false`
+
+# So, we basically use single property `cluster.isMaster` to decide what `index.js` file do whenever it get executed. As soon as we star doing fork node is going to execute that `index.js` file a second or third or fourth time. So, when we runthis file we need to make sure that we must behave slight differently depending upon whether we are running in the cluster manager or a worker instance.
+
