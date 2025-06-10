@@ -7,7 +7,9 @@ if (cluster.isMaster) {
   // cause `index.js` to be executed *again* but
   // in child mode (slave mode)
   cluster.fork();
-  console.log("Forked!!");
+  // cluster.fork();
+  // cluster.fork();
+  // cluster.fork();
 } else {
   // I am child, i am going to act like a server
   // and do nothing else  
@@ -23,6 +25,10 @@ if (cluster.isMaster) {
     doWork(5000);
     res.send("Hi there...");
   });
+
+  app.get('/fast', (req, res) => {
+    res.send('This was fast!!');
+  })
 
   const portNo = 4712;
   app.listen(portNo, () => {

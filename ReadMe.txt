@@ -234,5 +234,16 @@ Q. What does `cluster.fork()` do?
 
 # As soon as we start forking off  additional worker instances (using cluster.fork()) however that `isMaster` flag is going to be set `false`
 
-# So, we basically use single property `cluster.isMaster` to decide what `index.js` file do whenever it get executed. As soon as we star doing fork node is going to execute that `index.js` file a second or third or fourth time. So, when we runthis file we need to make sure that we must behave slight differently depending upon whether we are running in the cluster manager or a worker instance.
+# So, we basically use single property `cluster.isMaster` to decide what `index.js` file do whenever it get executed. As soon as we start doing fork, node is going to execute that `index.js` file a second or third or fourth time. So, when we run this file we need to make sure that we must behave slight differently depending upon whether we are running in the cluster manager or a worker instance.
 
+##  025   Clustering in Action (02:11:09)
+
+# When we start up just one child (using `cluster.fork()` single time) that's not really doing a whole lot for us, when we have one child that's basically doing the same thing as just executing our server in normal mode because we have only one child we still have one instance of the Event Loop and we are not gaining any performance benefit. We can easily start up additional children by simply calling `cluster.fork()` additional time.
+
+# Once we call `cluster.fork()` four times that means in addition to the first time of executing the `index.js` file, it will be executed an additional four times and each time `isMaster` property set to false.
+
+# Without clustering when we load up two instances of `index.js` file with 5 seconds of delay at that time we only had that single instance of the server we had to wait for the first request to be completed we had to wait that full 5 seconds before the 5-seconds request would even start.
+
+# Using Clustering :- we are able to load two separate requests at the same time and the second request went very quickly because we had two separate servers handling each request.
+
+# So, by using clustering we can start up multiple instances of server that more evenly address all the incoming requests that are coming into our application and have some more predictable response time.
