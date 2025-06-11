@@ -247,3 +247,24 @@ Q. What does `cluster.fork()` do?
 # Using Clustering :- we are able to load two separate requests at the same time and the second request went very quickly because we had two separate servers handling each request.
 
 # So, by using clustering we can start up multiple instances of server that more evenly address all the incoming requests that are coming into our application and have some more predictable response time.
+
+## 026   Benchmarking Server Performance (02:16:43)
+
+# Adding a whole bunch of additional children (using `cluster.fork`) really has diminishing returns in some cases it can actually be kind of catastrophic for our application.
+
+# Command to measure perform of Server (using Apache from `bin` directory) - `ab.exe -c 50 -n 500 http://localhost:4712/fast
+`
+
+## 027   Benchmark Refactor (02:22:00)
+
+# We will replace `doWork` function, it is currently used as blocking code but it doesn't really do a good job of simulating true actual work like some computation some fixed set of data.
+
+# Instead of `doWork` function we will use pbkdf2 hashing function for better computation analysis.
+
+# All of the children inside of the cluster will have one thread available in their thread pool.
+
+# Note - Whenever we create a cluster every single child has their own separate thread pool.
+
+# Normally every child that we would create has a group of four threads that they can use for computation
+
+# By using `process.env.UV_THREADPOOL_SIZE = 1;`, this doesn't restrict the total number of threads in entire cluster, it means that every child in the cluster only has one thread available. 
