@@ -267,4 +267,29 @@ Q. What does `cluster.fork()` do?
 
 # Normally every child that we would create has a group of four threads that they can use for computation
 
-# By using `process.env.UV_THREADPOOL_SIZE = 1;`, this doesn't restrict the total number of threads in entire cluster, it means that every child in the cluster only has one thread available. 
+# By using `process.env.UV_THREADPOOL_SIZE = 1;`, this doesn't restrict the total number of threads in entire cluster, it means that every child in the cluster only has one thread available.
+
+## 028   Need More Children (02:25:55)
+
+# With One child - we can see in Server Benchmarking that it took around 1 second for 2 requests,
+
+# With two childs - it took 0.5 second only for 2 requests
+
+# So by using clustering we have got a very distinct benefit. 
+
+# But when we use 6 child processes, each process took around 1.3 seconds
+
+# When we run our code with 6 child processes at same time that means in those six separate threads that are running on six separate children, we are bouncing between every hash function calls at the exact same time and our CPU is trying to do a little bit of work on each six process all at same time. The result is that we didn't get our code executed six-times faster or anything like this. The result is that it took significantly longer time of 1.3 seconds to eventually get a response.
+
+# So, although we were able to address these incoming requests at the same time but the net result was that our overall performance suffered because CPU was trying to bounce around and process all these different incoming requests at exactly the same time. So, this is a very clear case where we have kind of overallocated instances inside of our cluster and even though we can definetly start processing all these processes at the exact same time but the result is that we have created kind of average bottleneck of mediocrity where we can only do so much at any given time and we've trying to do too much so it slowed down the overall result.
+
+# So, clearly there is an upper bound to the number of children that we want to create inside cluster whenever we have computationally intensive work to do.
+
+Q. How to fix the issue of number of children overallocation?
+# Let us reduce the number of children to 2 and the longest request took 1.7 second (where we ran 6 requests parallely)
+
+# In above case, with two children we know we can only process at best two processes (two hash functions) at any given time. Even though we have used fewer children (two only) we actually have ended up with arguably a far better performance than previously with six children.
+
+# So, by increasing the number of children that we have inside our application dramatically beyond the number of actual logical cores that we have in our system, we are going to have net negative effect on the performance of the system.
+
+# In general we want to match the number of children in cluster to either the number of physical cores or logical cores we have in our system.
