@@ -347,3 +347,12 @@ Q. How to fix the issue of number of children overallocation?
 
 # Command to stop pm2 - `pm2 delete index`
 
+## 031   Webworker Threads (02:52:21)
+
+# webworker-threads provides an asynchronous API for CPU-bound tasks that's missing in Node.js
+
+# worker threads are still in the experimental stage. If we want to improve Node application performance then Clustering mode is recommended approach.
+
+# Worker thread uses the same thread pool that is managed by libuv for doing stuff like handling that hashing function. Using worker thread and getting direct access to that is definetly useful but at the end of the day the usage of it is still being limited by the amount of overall processing power of CPU.
+
+# webworker-threads - https://www.npmjs.com/package/webworker-threads

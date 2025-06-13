@@ -1,4 +1,6 @@
 
+// I am child, i am going to act like a server
+// and do nothing else
 const express = require("express");
 const crypto = require("crypto");
 const app = express();
