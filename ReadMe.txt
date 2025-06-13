@@ -384,3 +384,11 @@ Q. How to fix the issue of number of children overallocation?
 - When the main application calls postMessage(), it triggers the worker's onmessage function
 - The worker performs the calculation and sends the result back via postMessage()
 - Initially only console logged the result without responding to HTTP requests
+
+## More Detailed Blog realted to Node Cluster and Worker threads
+
+# Clustering and PM2: Multitasking in NodeJS - https://medium.com/@manikmudholkar831995/clustering-and-pm2-multitasking-in-nodejs-c6b10249cfd4
+
+# Child Processes: Multitasking in NodeJS - https://medium.com/@manikmudholkar831995/child-processes-multitasking-in-nodejs-751f9f7a85c8
+
+# Worker Threads : Multitasking in NodeJS - https://medium.com/@manikmudholkar831995/worker-threads-multitasking-in-nodejs-6028cdf35e9d
