@@ -255,6 +255,10 @@ Q. What does `cluster.fork()` do?
 # Command to measure perform of Server (using Apache from `bin` directory) - `ab.exe -c 50 -n 500 http://localhost:4712/fast
 `
 
+# The cluster mode allows networked Node.js applications (http(s)/tcp/udp server) to be scaled across all CPUs available, without any code modifications. This greatly increases the performance and reliability of your applications, depending on the number of CPUs available. Under the hood, this uses the Node.js cluster module such that the scaled application’s child processes can automatically share server ports.
+
+# How Cluster Works? - https://nodejs.org/api/cluster.html#cluster_how_it_works
+
 ## 027   Benchmark Refactor (02:22:00)
 
 # We will replace `doWork` function, it is currently used as blocking code but it doesn't really do a good job of simulating true actual work like some computation some fixed set of data.
@@ -293,3 +297,32 @@ Q. How to fix the issue of number of children overallocation?
 # So, by increasing the number of children that we have inside our application dramatically beyond the number of actual logical cores that we have in our system, we are going to have net negative effect on the performance of the system.
 
 # In general we want to match the number of children in cluster to either the number of physical cores or logical cores we have in our system.
+
+# Problems associated with Clustering in real world application :-
+1). Memory Overhead and Resource Consumption :- Each worker process in a cluster maintains its own memory space, leading to substantial memory overhead. 
+
+2). State Synchronization Issues :- Child Process (Worker processes) cannot directly share memory, making state synchronization extremely complex. 
+
+3). Load Balancer Limitations :- Node's built-in cluster module uses a simple round-robin load balancing approach that doesn't account for actual worker load or request complexity.
+
+4). Debugging and Development Complexity :- Debugging clustered applications is significantly more difficult because issues might be specific to individual workers or occur due to inter-worker communication problems.
+
+5). Database Connection Pool Issues :- Each worker maintains its own database connections, potentially overwhelming the database with too many connections or causing connection pool exhaustion.
+
+6). File System and Shared Resource Conflicts :- Multiple workers trying to access the same files or shared resources can cause race conditions and conflicts.
+
+# More Details - https://claude.ai/share/2cdf28fa-c1ae-4f37-b5f8-6f3cf0c7d4e1
+
+## 029   PM2 Installation (02:42:38)
+
+# Write our own cluster management implementation from scratch is bit challenging. So, if we ever want to use cluster management in a production application there's really one place we should turn to that is `pm2 CLI`.
+
+# PM2 - PM2 is a daemon process manager that will help us manage and keep our application online. 
+
+# PM2 - https://github.com/Unitech/pm2
+
+# PM2 Doc - https://pm2.keymetrics.io/docs/usage/quick-start/
+
+## 030   PM2 Configuration (02:45:31)
+
+# 
