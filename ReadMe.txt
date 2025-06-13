@@ -356,3 +356,20 @@ Q. How to fix the issue of number of children overallocation?
 # Worker thread uses the same thread pool that is managed by libuv for doing stuff like handling that hashing function. Using worker thread and getting direct access to that is definetly useful but at the end of the day the usage of it is still being limited by the amount of overall processing power of CPU.
 
 # webworker-threads - https://www.npmjs.com/package/webworker-threads
+
+## 032   Worker Threads in Action (02:54:48)
+
+# Architecture: The implementation creates two separate threads - the main application thread (event loop) and a worker thread. These threads communicate through a message-passing system using postMessage() and onMessage properties.
+
+# Communication Pattern:
+- The main thread creates a worker interface that spawns the worker thread
+- Both sides use `postMessage()` to send data and `onMessage` callbacks to receive data
+- Variables cannot be directly shared between threads - all communication must go through the messaging system
+
+# Implementation Steps:
+- Import the worker_threads library: const { Worker } = require('worker_threads')
+- Create a new Worker instance with a function containing the work logic
+- Set up worker.onMessage callback in the main thread to handle responses
+- Use worker.postMessage() to send data to the worker
+- Inside the worker function, define this.onMessage to handle incoming data
+- Use this.postMessage() to send results back to the main thread
