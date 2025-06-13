@@ -325,4 +325,25 @@ Q. How to fix the issue of number of children overallocation?
 
 ## 030   PM2 Configuration (02:45:31)
 
-# 
+# PM2 Process Manager is a cluster management solution and it has everything having to do with spawning multiple instances of our application and managing the health of every single of them. If one of the instances ever crashes it's going to automatically restart the instance.
+
+# Command to run node js file using pm2 is - `pm2 start index.js -i 0`
+
+# In above command `-i` is for letting pm2 decide how many instances to create for our application and common option to use with `-i` 0. If we put 0 then, pm2 going to setup a number of instances equal to the number of logical CPU cores on our system.
+
+# Logical cores is the number of pysical cores times the number of threads that they can process at any given point of time.
+
+# Logical cores = Number of pysical cores * number of threads processed at any given time.
+
+# So if we pass `-i` 0 in above command, it will start up a number equal to the number of actual cores on our machine
+
+# Command to get a summary of health of all running instances :- `pm2 list`
+
+# Command to get details of application - `pm2 show application_name` ---> `pm2 show index`
+
+# Command to check health of each instance - `pm2 monit`
+
+# In general we can `pm2` in production environment and it's going to take care of managing the health of every single one of instances. 
+
+# Command to stop pm2 - `pm2 delete index`
+
