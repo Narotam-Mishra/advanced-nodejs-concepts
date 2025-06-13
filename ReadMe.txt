@@ -373,3 +373,14 @@ Q. How to fix the issue of number of children overallocation?
 - Use worker.postMessage() to send data to the worker
 - Inside the worker function, define this.onMessage to handle incoming data
 - Use this.postMessage() to send results back to the main thread
+
+# More Details on worker-thread :- https://medium.com/@manikmudholkar831995/worker-threads-multitasking-in-nodejs-6028cdf35e9d 
+
+## 033   Benchmarking Workers (03:06:22)
+
+# Key Points:
+
+- The worker counts from 0 to 1×10^9 (1 billion) in a separate thread
+- When the main application calls postMessage(), it triggers the worker's onmessage function
+- The worker performs the calculation and sends the result back via postMessage()
+- Initially only console logged the result without responding to HTTP requests
